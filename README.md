@@ -2,11 +2,13 @@
 
 ## Command list
 
-    !silent
-    !grep
-    !igrep
-    !grep_format
-    !igrep_format
+    !silent               : Switch On/Off silent mode     
+    !grep                 : Filter lines by regular expression
+    !igrep                : Filter lines by regular expression, case-insensitive
+    !grep_format          : Do regular expression searching, output formatted result upon captured groups
+    !igrep_format         : Do regular expression searching, output formatted result upon captured groups, case-insensitive
+    !grep_formatx         : Do regular expression searching, output formatted result upon captured groups, then execute formatted string as windbg commands
+    !igrep_formatx        : Do regular expression searching, output formatted result upon captured groups, case-insensitive, then execute formatted string as windbg commands
     
 ## Working Mechanism
 
