@@ -14,7 +14,7 @@
 
 Cache the last command's *Normal Output*, and do **grep** or **grep_format** operations on it.
 
-This caching is not enabled by default, so you have to run one of the above commands to activate it first. If you want to hide the original output content, then just precedes the output generating commands with **!silent** command; If not, you need to run one of the other four commands with parameters, f.e. **!grep** to activate the caching first.
+This caching is not enabled by default, so you have to run one of the above commands to activate it first. If you want to hide the original output content, then just precedes the output generating commands with **!silent** command; If not, you need to run one of the other commands with parameters, f.e. **!grep** to activate the caching first.
 
 ## Usage
 
@@ -153,6 +153,27 @@ This caching is not enabled by default, so you have to run one of the above comm
           7ffb`76a21000     7ffb`76a24000        0`00003000 MEM_IMAGE   MEM_COMMIT  PAGE_WRITECOPY                     Image      [msvcrt; "C:\WINDOWS\System32\msvcrt.dll"]
           7ffb`76a26000     7ffb`76a27000        0`00001000 MEM_IMAGE   MEM_COMMIT  PAGE_WRITECOPY                     Image      [msvcrt; "C:\WINDOWS\System32\msvcrt.dll"]
           7ffb`76b7d000     7ffb`76b7f000        0`00002000 MEM_IMAGE   MEM_COMMIT  PAGE_WRITECOPY                     Image      [ntdll; "ntdll.dll"]
+
+**!igrep_formatx** first does case-insensitive regular expression searching, and then does formatting on the captured groups, at last executes those formatted string as windbg commands(set breakpoints);
+         
+    kd> !silent; x nt!*mut*; !igrep_formatx (nt!Nt\w*mut\w*) 'bp $1'
+    .outmask- 3F7
+    Client 000002112A925030 mask is 3F7
+    ---------------------------------------------------------------------- [Grep&Format Result] ----------------------------------------------------------------------
+    bp nt!NtOpenMutant
+    bp nt!NtQueryMutant
+    bp nt!NtReleaseMutant
+    bp nt!NtCreateMutant
+    ---------------------------------------------------------------------- [Start Execution] ----------------------------------------------------------------------
+    bp nt!NtOpenMutant
+    bp nt!NtQueryMutant
+    bp nt!NtReleaseMutant
+    bp nt!NtCreateMutant
+    kd> bl
+     0 e fffff803`1ff4171c     0001 (0001) nt!NtOpenMutant
+     1 e fffff803`1fe4efd0     0001 (0001) nt!NtQueryMutant
+     2 e fffff803`1fe69e40     0001 (0001) nt!NtReleaseMutant
+     3 e fffff803`1fed8ca0     0001 (0001) nt!NtCreateMutant          
     
 ## Limitations
 
